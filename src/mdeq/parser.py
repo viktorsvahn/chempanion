@@ -62,16 +62,48 @@ def argument_parser():
         '-dt',
         type=float,
         default=1,
+        required=False,
     )
     parser.add_argument(
-        '--scale',
+        '--pressure',
         type=float,
         default=1.0,
+        required=False,
     )
     parser.add_argument(
         '--friction',
         type=float,
         default=0.002,
+        required=False,
+    )
+    parser.add_argument(
+        '--taut',
+        type=float,
+        default=0.5,
+        required=False,
+    )
+    parser.add_argument(
+        '--taup',
+        type=float,
+        default=1,
+        required=False,
+    )
+    parser.add_argument(
+        '--scale',
+        type=float,
+        default=None,
+        required=False,
+    )
+    parser.add_argument(
+        '--density',
+        type=float,
+        default=None,
+    )
+    parser.add_argument(
+        '-d', '--dump_interval',
+        default=10,
+        type=int,
+        required=False,
     )
     parser.add_argument(
         '--output', '-o',

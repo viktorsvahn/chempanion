@@ -4,8 +4,15 @@
 #import sys
 import pandas as pd
 
+from ase.io import read
+from ase.calculators.lj import LennardJones
+
+
 from mdeq.parser import argument_parser
-from mdeq.temp import nvt
+#from mdeq.temp import nvt
+#from mdeq.pres import npt
+from mdeq.ensemble import nvt,npt,nve
+from mdeq.utils import volume_rescale
 
 
 
@@ -13,19 +20,60 @@ def main():
 	input_args = argument_parser()
 	args = vars(input_args)
 	print(args)
+	
 
-	if args['ensemble'].lower() == 'nvt':
+	ensemble = args['ensemble'].lower()
+	atoms = read(args['input'])
+	atoms.calc = LennardJones()
+
+	if (args['scale'] is None) and (args['density'] is not None):
+		cell_scale = volume_rescale(atoms,args['density'])
+	elif (args['scale'] is not None) and (args['density'] is None):
+		cell_scale = args['scale']
+	else:
+		cell_scale = 1.0
+
+	
+	if ensemble.lower() == 'nvt':
+		print(f'Running Langevin {ensemble.upper()}')
 		nvt(
-			input_name=args['input'],
+			atoms,
+			dt=args['dt'],
 			steps=args['steps'],
 			T=args['temperature'],
-			dt=args['dt'],
-			cell_scale=args['scale'],
+			cell_scale=cell_scale,
 			friction=args['friction'],
 			output_name=args['output'],
+			dump_interval=args['dump_interval'],
+		)
+	
+	elif ensemble.lower() == 'npt':
+		print(f'Running Berendsen {ensemble.upper()}')
+		npt(
+			atoms,
+			dt=args['dt'],
+			steps=args['steps'],
+			T=args['temperature'],
+			pressure=args['pressure'],
+			taut=args['taut'],
+			taup=args['taup'],
+			output_name=args['output'],
+			dump_interval=args['dump_interval'],
 		)
 
-
+	elif ensemble.lower() == 'nve':
+		nve(
+			atoms,
+			dt=args['dt'],
+			steps=args['steps'],
+			T=args['temperature'],
+			cell_scale=cell_scale,
+			#pressure=args['pressure'],
+			#taut=args['taut'],
+			#taup=args['taup'],
+			output_name=args['output'],
+			dump_interval=args['dump_interval'],
+		)
 
 if __name__ == '__main__':
 	main()
