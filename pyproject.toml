@@ -19,17 +19,16 @@ dynamic = ["version"]
 authors = [
   { name="Viktor Svahn", email="svahnv@gmail.com" },
 ]
-description =   "Converts csv and excel documents to latex tables."
+description =   "Create and equilibrate atomic structures for simulation using ase."
 readme = "README.md"
 requires-python = ">=3.7"
 dependencies = [
-    'pandas',
+    'numpy',
     'ase',
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
-    "Operating System :: Ubuntu",
 ]
 
 [project.urls]
