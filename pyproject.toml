@@ -1,0 +1,40 @@
+[build-system]
+requires = [
+    "setuptools",
+    "setuptools-git-versioning"
+]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools-git-versioning]
+enabled = true
+dev_template = "{tag}"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+
+[project]
+name = "mdeq"
+dynamic = ["version"]
+authors = [
+  { name="Viktor Svahn", email="svahnv@gmail.com" },
+]
+description =   "Converts csv and excel documents to latex tables."
+readme = "README.md"
+requires-python = ">=3.7"
+dependencies = [
+    'pandas',
+    'ase',
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: Ubuntu",
+]
+
+[project.urls]
+Homepage = "https://github.com/viktorsvahn/mdeq/"
+Issues = "https://github.com/viktorsvahn/mdeq/issues"
+
+[project.scripts]
+mdeq = "mdeq.main:main"
