@@ -4,10 +4,8 @@ import numpy as np
 
 from ase.io import read,write
 
-#from vscan.parser import argument_parser
 
-
-def vscan(atoms,mode,min_scale,max_scale,npoints,output_name):
+def samp(atoms,mode,min_scale,max_scale,npoints,output_name):
 	new_atoms = []
 	if mode == 'a':
 		print('Atomic mode (atomic coordinates are being scaled)')
@@ -47,6 +45,7 @@ def vscan(atoms,mode,min_scale,max_scale,npoints,output_name):
 
 def main(args):
 	args = vars(args)
+	print(args)
 	
 	atoms = read(args['input'])
 

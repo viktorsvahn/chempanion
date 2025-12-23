@@ -2,7 +2,7 @@
 
 import argparse
 
-from ccm.mdeq.main import main as mdeq_main
+from cmp.mdeq.main import main as mdeq_main
 
 
 description = """

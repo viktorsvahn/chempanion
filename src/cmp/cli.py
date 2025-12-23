@@ -1,16 +1,16 @@
 import argparse
 from importlib.metadata import version
 
-from ccm.vscan.cli import register_subcommand as register_vscan
-from ccm.mdeq.cli import register_subcommand as register_mdeq
-from ccm.db.cli import register_subcommand as register_db
+from cmp.vscan.cli import register_subcommand as register_vscan
+from cmp.mdeq.cli import register_subcommand as register_mdeq
+from cmp.db.cli import register_subcommand as register_db
 
 version_help = f'\
-treerun ver. {version("treerun")}'
+chempanion ver. {version("chempanion")}'
 
 def main():
     parser = argparse.ArgumentParser(
-        prog="ccm",
+        prog="chempanion",
         description="My modular CLI"
     )
 

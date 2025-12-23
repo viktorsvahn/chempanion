@@ -10,7 +10,7 @@ from ase.md.langevin import Langevin
 from ase.md.nvtberendsen import NVTBerendsen
 from ase.md.nptberendsen import NPTBerendsen
 
-from mdeq.utils import printenergy
+from cmp.mdeq.utils import printenergy
 
 
 def nve(atoms,steps,T,output_name,dt,cell_scale,dump_interval):
