@@ -13,11 +13,11 @@ from ase.md.nptberendsen import NPTBerendsen
 from cmp.mdeq.utils import printenergy
 
 
-def nve(atoms,steps,T,output_name,dt,cell_scale,dump_interval):
+def nve(atoms,steps,T,output_name,dt,vscale,dump_interval):
 	dyn = VelocityVerlet(atoms, dt*units.fs)
 	dyn.attach(printenergy, interval=dump_interval,**dict(a=atoms))
 
-	atoms.set_cell(atoms.cell*cell_scale, scale_atoms=True)
+	atoms.set_cell(atoms.cell*vscale, scale_atoms=True)
 	MaxwellBoltzmannDistribution(atoms, temperature_K=T)
 
 	dyn.run(steps)
@@ -25,11 +25,11 @@ def nve(atoms,steps,T,output_name,dt,cell_scale,dump_interval):
 		write(output_name,atoms)
 
 
-def nvt(atoms,steps,T,output_name,dt,cell_scale,friction,dump_interval):
+def nvt(atoms,steps,T,output_name,dt,vscale,friction,dump_interval):
 	dyn = Langevin(atoms, dt*units.fs, temperature_K=T, friction=friction)
 	dyn.attach(printenergy, interval=dump_interval,**dict(a=atoms))
 
-	atoms.set_cell(atoms.cell*cell_scale, scale_atoms=True)
+	atoms.set_cell(atoms.cell*vscale, scale_atoms=True)
 	MaxwellBoltzmannDistribution(atoms, temperature_K=T)
 
 	dyn.run(steps)

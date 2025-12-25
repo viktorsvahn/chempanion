@@ -16,12 +16,12 @@ def main(args):
 	atoms = read(args['input'])
 	atoms.calc = LennardJones()
 
-	if (args['scale'] is None) and (args['density'] is not None):
-		cell_scale = volume_rescale(atoms,args['density'])
-	elif (args['scale'] is not None) and (args['density'] is None):
-		cell_scale = args['scale']
+	if (args['vscale'] is None) and (args['density'] is not None):
+		vscale = volume_rescale(atoms,args['density'])
+	elif (args['vscale'] is not None) and (args['density'] is None):
+		vscale = args['vscale']
 	else:
-		cell_scale = 1.0
+		vscale = 1.0
 
 	
 	if ensemble.lower() == 'nve':
@@ -31,7 +31,7 @@ def main(args):
 			dt=args['dt'],
 			steps=args['steps'],
 			T=args['temperature'],
-			cell_scale=cell_scale,
+			vscale=vscale,
 			output_name=args['output'],
 			dump_interval=args['dump_interval'],
 		)
@@ -43,7 +43,7 @@ def main(args):
 			dt=args['dt'],
 			steps=args['steps'],
 			T=args['temperature'],
-			cell_scale=cell_scale,
+			vscale=vscale,
 			friction=args['friction'],
 			output_name=args['output'],
 			dump_interval=args['dump_interval'],

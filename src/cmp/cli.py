@@ -9,9 +9,10 @@ version_help = f'\
 Chempanion ver. {version("chempanion")}'
 
 description = '''\
-Chempanion is a CLI for a collection of tools that are useful within the realm of
-molecular simulation, such as equilibration of MD structures, generating volume-
-scans, random sampling, etc.'''
+Chempanion is a CLI for a collection of tools that are useful within the realm
+of molecular simulation, such as the equilibration of molecular structures 
+intended for molecular dynamics simulations, generating volume-scans, random 
+sampling, etc.'''
 
 def show_banner(args):
     print(r"""

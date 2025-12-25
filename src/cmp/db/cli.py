@@ -42,7 +42,8 @@ def register_subcommand(subparsers):
         default=None,
     )
     parser.add_argument(
-        '--output', '-o',
+        '-o',
+        dest='output',
         default=None,
         help='output filename',
     )
