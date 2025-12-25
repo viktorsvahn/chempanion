@@ -5,17 +5,11 @@ from cmp.vscan.cli import register_subcommand as register_vscan
 from cmp.mdeq.cli import register_subcommand as register_mdeq
 from cmp.db.cli import register_subcommand as register_db
 
+
 version_help = f'\
 Chempanion ver. {version("chempanion")}'
 
-description = '''\
-Chempanion is a CLI for a collection of tools that are useful within the realm
-of molecular simulation, such as the equilibration of molecular structures 
-intended for molecular dynamics simulations, generating volume-scans, random 
-sampling, etc.'''
-
-def show_banner(args):
-    print(r"""
+banner = r"""
    _____ _                                      _             
   / ____| |                                    (_)            
  | |    | |__   ___ _ __ ___  _ __   __ _ _ __  _  ___  _ __  
@@ -24,7 +18,20 @@ def show_banner(args):
   \_____|_| |_|\___|_| |_| |_| .__/ \__,_|_| |_|_|\___/|_| |_|
                              | |                              
                              |_|                              
-    """)
+    """
+
+description = f'''\
+{banner}
+
+Chempanion is a CLI for a collection of tools that are useful within the realm
+of molecular simulation, such as the equilibration of molecular structures 
+intended for molecular dynamics simulations, generating volume-scans, random 
+sampling, etc.
+'''
+
+
+def show_banner(args):
+    print(banner)
     print(version_help)
     print('\nCall:\n> cmp -h\nfor further instructions on usage.')
 
