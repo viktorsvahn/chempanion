@@ -34,6 +34,8 @@ def register_subcommand(subparsers):
     )
     parser.add_argument(
         'mode',
+        help='database action',
+        choices=['sample'],
     )
     parser.add_argument(
         'input',
@@ -48,11 +50,13 @@ def register_subcommand(subparsers):
     )
     parser.add_argument(
         '--seed', '-s',
+        help='numpy random seed (default None)',
         type=int,
         default=None,
     )
     parser.add_argument(
         '--output', '-o',
         default=None,
+        help='output filename',
     )
     parser.set_defaults(func=db_main)
