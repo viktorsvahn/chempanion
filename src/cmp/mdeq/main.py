@@ -5,7 +5,6 @@ import pandas as pd
 from ase.io import read
 from ase.calculators.lj import LennardJones
 
-#from mdeq.parser import argument_parser
 from cmp.mdeq.ensemble import nvt,npt,nve
 from cmp.mdeq.utils import volume_rescale
 
