@@ -11,19 +11,6 @@ CLI for managing xyz-format databases, such as adding static handles and random
 sampling of structures.
 """
 
-example = """dadsadasds
-"""
-
-
-
-# 80-23=57 spaces wide
-
-input_help = """dasda
-"""
-
-header_help = """dasda
-"""
-
 
 def register_subcommand(subparsers):
     parser = subparsers.add_parser(
