@@ -13,4 +13,4 @@ cmp vscan m ec_emc.xyz -n 10 --max 2
 
 cmp db -h
 cmp db sample db.xyz -n 0.5
-cmp db sample db.xyz -n 3
+cmp db sample db.xyz -n 3 --seed 123

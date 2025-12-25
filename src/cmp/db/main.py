@@ -35,17 +35,19 @@ def sample(atoms,n_samples,output_name):
 def main(args):
 	args = vars(args)
 	
-	atoms = read(args['input'], ':')
-	np.random.seed(args['seed'])
-		
+	input_file = args['input']
+	atoms = read(input_file, ':')
 
 	if args['mode'] == 'sample':
+		print(f'Sampling from {input_file} using Chempanion.\n')
 		summary = {
 			'Database size (# structures)':len(atoms),
 			'Sample rate (# or %)':args['n_samples'],
-			'Seed':np.random.get_state()[1][2],
 			#'test':[0,1,2,3],
 		}
+		if args['seed'] is not None:
+			np.random.seed(args['seed'])
+			summary['Seed'] = args['seed']
 
 		out = sample(
 			atoms,
