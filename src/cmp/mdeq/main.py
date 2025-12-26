@@ -5,6 +5,7 @@ import pandas as pd
 from ase.io import read
 from ase.calculators.lj import LennardJones
 
+from cmp.utils import show_small_banner
 from cmp.mdeq.ensemble import nvt,npt,nve
 from cmp.mdeq.utils import volume_rescale
 
@@ -24,6 +25,7 @@ def main(args):
 		vscale = 1.0
 
 	
+	show_small_banner()
 	if ensemble.lower() == 'nve':
 		print(f'Running {ensemble.upper()}')
 		nve(
