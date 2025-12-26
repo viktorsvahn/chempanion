@@ -1,5 +1,15 @@
 #!/usr/bin/python3
 
+def show_small_banner():
+    small_banner = r"""
+  ___ _                              _          
+ / __| |_  ___ _ __  _ __  __ _ _ _ (_)___ _ _  
+| (__| ' \/ -_) '  \| '_ \/ _` | ' \| / _ \ ' \ 
+ \___|_||_\___|_|_|_| .__/\__,_|_||_|_\___/_||_|
+                    |_|                         
+    """
+    print(small_banner)
+
 
 def tabulate(dictionary,header='',tab_width=4):
 	max_key_spacing = max(len(key) for key in dictionary)+tab_width
