@@ -5,7 +5,7 @@ from operator import itemgetter
 
 from ase.io import read,write
 
-from cmp.utils import tabulate
+from cmp.utils import tabulate, show_small_banner
 
 
 def sample(atoms,n_samples,output_name):
@@ -38,6 +38,7 @@ def main(args):
 	input_file = args['input']
 	atoms = read(input_file, ':')
 
+	show_small_banner()
 	if args['mode'] == 'sample':
 		print(f'Sampling from {input_file} using Chempanion.\n')
 		summary = {
