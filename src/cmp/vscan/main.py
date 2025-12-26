@@ -45,15 +45,20 @@ def vscan(atoms,mode,min_scale,max_scale,npoints,output_name):
 
 
 
-def generate_volume_scans(atoms,mode,min_scale,max_scale,npoints,output_name):
+def generate_volume_scans(atoms,index_offset,mode,min_scale,max_scale,npoints,output_name):
 	new_atoms = []
+
+	if index_offset == ':':
+		index_offset = 0
+	else:
+		index_offset = int(index_offset)
 
 	if type(atoms) != list:
 		atoms = [atoms]
 
 	for i,a in enumerate(atoms):
 		if len(atoms) > 1:
-			print(f'\nScanning structure {i+1}')
+			print(f'\nScanning structure {index_offset+i+1}')
 		scan = vscan(
 			atoms=a,
 			mode=mode,
@@ -76,8 +81,7 @@ def main(args):
 	atoms = read(input_file, index)
 
 	show_small_banner()
-	if index == ':':
-		pass
+	if ':' in index:
 		print(f'Generating a volume-scan of all structures in {input_file} using Chempanion.\n')
 	else:
 		idx = int(index)+1
@@ -91,6 +95,7 @@ def main(args):
 
 	generate_volume_scans(
 		atoms,
+		index_offset=index[0],
 		mode=args['mode'],
 		min_scale=args['min'],
 		max_scale=args['max'],
