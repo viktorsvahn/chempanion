@@ -13,6 +13,8 @@ the Berendsen thermostat/barostat.
 
 NOTE: The Berendsen thermostat/barostat should not be used for production MD and, 
 by extentsion, neither should this package.
+
+Omitted output (-o) will always result in a dry-run.
 """
 
 

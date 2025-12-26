@@ -9,6 +9,8 @@ from cmp.db.main import main as db_main
 description = """
 CLI for managing xyz-format databases, such as adding static handles and random 
 sampling of structures.
+
+Omitted output (-o) will always result in a dry-run.
 """
 
 

@@ -10,8 +10,8 @@ CLI for generating volume scans of ASE compliant atomic/molecular structures.
 The generated structures have no force and energy labels but the the header in 
 input xyz-files is preserved.
 
+Omitted output (-o) will always result in a dry-run.
 """
-#Omitted output (-o) will always result in a dry-run.
 
 
 def register_subcommand(subparsers):
