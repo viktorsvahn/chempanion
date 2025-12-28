@@ -67,3 +67,15 @@ def count_unique(arr):
 		str(item):arr.count(item) for item in items
 	}
 	return counts
+
+
+def select_atoms(atoms,handle,value):
+	if '*' in value:
+		new_atoms = [a for a in atoms if wildcard_match(value, a.info[handle])]
+	else:
+		new_atoms = [a for a in atoms if value == a.info[handle]]
+	handle_counts = count_unique([a.info[handle] for a in new_atoms])
+	if handle_counts == dict():
+		print('\nCould not find any matches! Aborting.')
+		quit()
+	return new_atoms, handle_counts
