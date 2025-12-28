@@ -82,7 +82,7 @@ def main(args):
 
 	show_small_banner()
 	if ':' in index:
-		print(f'Generating a volume-scan of all structures in {input_file} using Chempanion.\n')
+		print(f'Generating a volume-scan of every structure in {input_file}\n')
 	else:
 		idx = int(index)+1
 		if idx == 1:
@@ -91,7 +91,7 @@ def main(args):
 			suffix = 'nd'
 		elif idx > 2:
 			suffix = 'th'
-		print(f'Generating a volume-scan of the {idx}{suffix} structure in {input_file} using Chempanion.\n')
+		print(f'Generating a volume-scan of the {idx}{suffix} structure in {input_file}\n')
 
 	generate_volume_scans(
 		atoms,
