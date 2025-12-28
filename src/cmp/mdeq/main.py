@@ -76,14 +76,14 @@ def main(args):
 			dump_interval=args['dump_interval'],
 		)
 
-	elif ensemble.lower() == 'vscan':
-		vscan(
-			atoms,
-			steps=args['steps'],
-			min_scale=args['min_scale'],
-			max_scale=args['max_scale'],
-			output_name=args['output'],
-		)
+	#elif ensemble.lower() == 'vscan':
+	#	vscan(
+	#		atoms,
+	#		steps=args['steps'],
+	#		min_scale=args['min_scale'],
+	#		max_scale=args['max_scale'],
+	#		output_name=args['output'],
+	#	)
 
 if __name__ == '__main__':
 	main()
