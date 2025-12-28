@@ -21,6 +21,7 @@ def register_subcommand(subparsers):
         description=description,
         formatter_class=argparse.RawTextHelpFormatter,
     )
+    select_group = parser.add_argument_group('selection')
     rand_group = parser.add_argument_group('random sampling')
 
     parser.add_argument(
@@ -37,6 +38,15 @@ def register_subcommand(subparsers):
         dest='output',
         default=None,
         help='output filename',
+    )
+    select_group.add_argument(
+        '--info',
+        nargs=2,
+        metavar=('HANDLE','VALUE'),
+        dest='handle',
+        type=str,
+        default=None,
+        help='select structures where info-HANDLE matches VALUE (wildcards supported)',
     )
     rand_group.add_argument(
         '-n',

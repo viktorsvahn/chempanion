@@ -34,3 +34,35 @@ def tabulate(dictionary,header='',tab_width=4):
 			print(f'| {key}:{a}{value}{b}|')
 	
 	print('+'+'-'*total_width+'+\n')
+
+
+def wildcard_match(pattern, string):
+	sub_patterns = pattern.split('*')
+	string = str(string)
+
+	# Beginning with wildcard
+	if sub_patterns[0] != '':
+		start = sub_patterns.pop(0)
+		starts_with = string.startswith(start)
+	else:
+		starts_with = True
+	
+	# Ending with wildcard
+	if sub_patterns[-1] != '':
+		end = sub_patterns.pop(-1)
+		ends_with = string.endswith(end)
+	else:
+		ends_with = True
+	
+	# Check beginning, end and middle wildcard match
+	return starts_with and ends_with and all(
+		p in string for p in sub_patterns
+	)
+
+
+def count_unique(arr):
+	items = set(arr)
+	counts = {
+		str(item):arr.count(item) for item in items
+	}
+	return counts
