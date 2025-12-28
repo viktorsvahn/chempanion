@@ -25,11 +25,6 @@ def register_subcommand(subparsers):
     rand_group = parser.add_argument_group('random sampling')
 
     parser.add_argument(
-        'mode',
-        help='database action',
-        choices=['sample'],
-    )
-    parser.add_argument(
         'input',
         help='input filename',
     )
@@ -49,7 +44,7 @@ def register_subcommand(subparsers):
         help='select structures where info-HANDLE matches VALUE (wildcards supported)',
     )
     rand_group.add_argument(
-        '-n',
+        '-s','--sample',
         dest='n_samples',
         type=str,
         default=None,

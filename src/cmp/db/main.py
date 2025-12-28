@@ -18,54 +18,54 @@ def sample(atoms,n_samples,output_name):
 
 	# Sample
 	rand = np.random.choice(np.arange(n), N, replace=False)
-	if len(rand) > 0:
-		new_atoms = list(
-			itemgetter(*rand)(atoms)
-		)
-		nn = len(new_atoms)
+	new_atoms = list(
+		itemgetter(*rand)(atoms)
+	)
+	nn = len(new_atoms)
 
-		if output_name is not None:
-			write(output_name,new_atoms)
+	if output_name is not None:
+		write(output_name,new_atoms)
 
-		return {
-			'Structures sampled':nn,
-			'Sample rate':round(N/n,3),
-		}
-	else:
-		print('\nCould not find any matches! Aborting.')
-		quit()
+	return {
+		'Structures sampled':nn,
+		'Sample rate':round(N/n,3),
+	}
 
 
-def select_info(atoms,handle,value):
+
+def select_atoms(atoms,handle,value):
 	if '*' in value:
 		new_atoms = [a for a in atoms if wildcard_match(value, a.info[handle])]
 	else:
 		new_atoms = [a for a in atoms if value == a.info[handle]]
 	handle_counts = count_unique([a.info[handle] for a in new_atoms])
+	if handle_counts == dict():
+		print('\nCould not find any matches! Aborting.')
+		quit()
 	return new_atoms, handle_counts
 
 
 def main(args):
+	show_small_banner()
 	args = vars(args)	
 	input_file = args['input']
 
 	if args['handle'] is not None:
 		handle, value = args['handle']
-		atoms, handle_counts = select_info(read(input_file, ':'), handle, value)
+		print(f'Searching for structures where the info-handle \'{handle}\' matches \'{value}\'')
+		atoms, handle_counts = select_atoms(read(input_file, ':'), handle, value)
 	else:
 		atoms = read(input_file, ':')
 
+	summary = {
+		'Database size (# structures)':len(atoms),
+	}
 
-	show_small_banner()
-	if args['mode'] == 'sample':
+
+	if args['n_samples'] is not None:
+		summary['Sample rate (# or %)'] = args['n_samples']
 		print(f'Sampling from {input_file} using Chempanion.')
-		if args['handle'] is not None:
-			print(f'Searching for structures where the info-handle \'{handle}\' matches \'{value}\'')
 
-		summary = {
-			'Database size (# structures)':len(atoms),
-			'Sample rate (# or %)':args['n_samples'],
-		}
 		if args['seed'] is not None:
 			np.random.seed(args['seed'])
 			summary['Seed'] = args['seed']
@@ -79,5 +79,8 @@ def main(args):
 	
 	tabulate(summary,header='\nInput summary:')
 	if args['handle'] is not None:
-		tabulate(handle_counts,header=f'Selected \'{handle}\' info-handles:')
-	tabulate(out,header='Output summary:')
+		tabulate(handle_counts,header=f'\nSelected \'{handle}\' info-handles:')
+	try:
+		tabulate(out,header='\nOutput summary:')
+	except:
+		pass

@@ -7,6 +7,7 @@ def show_small_banner():
 | (__| ' \/ -_) '  \| '_ \/ _` | ' \| / _ \ ' \ 
  \___|_||_\___|_|_|_| .__/\__,_|_||_|_\___/_||_|
                     |_|                         
+
     """
     print(small_banner)
 
@@ -33,7 +34,7 @@ def tabulate(dictionary,header='',tab_width=4):
 		else:
 			print(f'| {key}:{a}{value}{b}|')
 	
-	print('+'+'-'*total_width+'+\n')
+	print('+'+'-'*total_width+'+')
 
 
 def wildcard_match(pattern, string):
