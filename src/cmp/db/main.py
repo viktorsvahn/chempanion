@@ -30,47 +30,36 @@ def sample(atoms,n_samples,output_name):
 	}
 
 
-
-def test_func(atoms,var,output_name):	
+def create_tag(atoms,assignment):
+	new_tag, statement = assignment.split('=')
 	
-	new_variable, statement = var.split('=')
-	
-	if '**' in var:
-		operation = '**'
-	elif '*' in var:
-		operation = '*'
-	elif '//' in var:
-		operation = '//'
-	elif '/' in var:
-		operation = '/'
-	elif '+' in var:
-		operation = '+'
-	elif '-' in var:
-		operation = '-'
-	else:
-		print(atoms.info[new_variable])
-		atoms.info[new_variable] = atoms.info[statement]
-		print(atoms.info[new_variable])
-		return atoms
-		#print('Missing operation')
-		#quit()
-	
-	if statement[0].isnumeric():
-		print('num')
-		value, old_variable = statement.split(operation)
-	else:
-		print('notnum')
-		old_variable, value = statement.split(operation)
-	print(new_variable, old_variable, operation, value)
+	# Replace 'energy' in the statement
+	if 'energy' in statement:
+		E = atoms.get_potential_energy()
+		statement = statement.replace('energy', str(E))
 
-	print(atoms.info[new_variable])
-	atoms.info[new_variable] = eval(
-		f'{float(atoms.info[old_variable])}{operation}{float(value)}'
-	)
-	print(atoms.info[new_variable])
+	# Replace any info-key in the statement
+	for key in atoms.info:
+		if key in statement:
+			statement = statement.replace(key, f'{atoms.info[key]}')
+			#eval_statement = True
 
-	#for a in atoms:
-	#	print()
+	# Evaluate statement if possible
+	try:
+		final_tag = eval(statement)
+	except:
+		final_tag = statement
+	
+	# Assign new tag
+	atoms.info[new_tag] = final_tag
+	return atoms
+
+
+def add_tags(atoms,assignment,output_name):
+	print(assignment)
+	new_atoms = [create_tag(a,assignment) for a in atoms]
+	if output_name is not None:
+		write(output_name,new_atoms)
 
 
 def main(args):
@@ -90,14 +79,6 @@ def main(args):
 	input_summary = {
 		'Database size (# structures)':len(atoms),
 	}
-
-	if args['test_var'] is not None:
-		print('sdsdsddas')
-		test_func(
-			atoms[0],
-			var=args['test_var'],
-			output_name=args['output']
-		)
 
 	# Random sampling
 	if args['n_samples'] is not None:
@@ -130,3 +111,12 @@ def main(args):
 		tabulate(output_summary,header='\nOutput summary:')
 	except:
 		pass
+
+
+	if args['add_info'] is not None:
+		print('\nProcessing:')
+		add_tags(
+			atoms,
+			assignment=args['add_info'],
+			output_name=args['output']
+		)

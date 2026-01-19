@@ -40,6 +40,12 @@ def register_subcommand(subparsers):
         default=None,
         help='test var',
     )
+    parser.add_argument(
+        '--add-info',
+        dest='add_info',
+        default=None,
+        help='add_info',
+    )
     select_group.add_argument(
         '--info',
         nargs=2,
