@@ -43,8 +43,9 @@ def register_subcommand(subparsers):
     parser.add_argument(
         '--add-info',
         dest='add_info',
+        metavar='TAG=STRING',
         default=None,
-        help='add_info',
+        help='add info-tags by assigning \'TAG=STRING\' (will evaluate both info-keys and\nmathematical operators withing STRING). Works with \'energy\' as well.',
     )
     select_group.add_argument(
         '--info',
