@@ -30,6 +30,49 @@ def sample(atoms,n_samples,output_name):
 	}
 
 
+
+def test_func(atoms,var,output_name):	
+	
+	new_variable, statement = var.split('=')
+	
+	if '**' in var:
+		operation = '**'
+	elif '*' in var:
+		operation = '*'
+	elif '//' in var:
+		operation = '//'
+	elif '/' in var:
+		operation = '/'
+	elif '+' in var:
+		operation = '+'
+	elif '-' in var:
+		operation = '-'
+	else:
+		print(atoms.info[new_variable])
+		atoms.info[new_variable] = atoms.info[statement]
+		print(atoms.info[new_variable])
+		return atoms
+		#print('Missing operation')
+		#quit()
+	
+	if statement[0].isnumeric():
+		print('num')
+		value, old_variable = statement.split(operation)
+	else:
+		print('notnum')
+		old_variable, value = statement.split(operation)
+	print(new_variable, old_variable, operation, value)
+
+	print(atoms.info[new_variable])
+	atoms.info[new_variable] = eval(
+		f'{float(atoms.info[old_variable])}{operation}{float(value)}'
+	)
+	print(atoms.info[new_variable])
+
+	#for a in atoms:
+	#	print()
+
+
 def main(args):
 	show_small_banner()
 	args = vars(args)
@@ -47,6 +90,14 @@ def main(args):
 	input_summary = {
 		'Database size (# structures)':len(atoms),
 	}
+
+	if args['test_var'] is not None:
+		print('sdsdsddas')
+		test_func(
+			atoms[0],
+			var=args['test_var'],
+			output_name=args['output']
+		)
 
 	# Random sampling
 	if args['n_samples'] is not None:
