@@ -34,17 +34,29 @@ def register_subcommand(subparsers):
         default=None,
         help='output filename',
     )
+    parser.add_argument(
+        '-x',
+        dest='test_var',
+        default=None,
+        help='test var',
+    )
+    parser.add_argument(
+        '--add-info',
+        dest='add_info',
+        default=None,
+        help='add_info',
+    )
     select_group.add_argument(
         '--info',
         nargs=2,
-        metavar=('HANDLE','VALUE'),
+        metavar=('HANDLE','ISVALUE'),
         dest='handle',
         type=str,
         default=None,
         help='select structures where info-HANDLE matches VALUE (wildcards supported)',
     )
     rand_group.add_argument(
-        '-s','--sample',
+        '-s',
         dest='n_samples',
         type=str,
         default=None,
@@ -52,7 +64,7 @@ def register_subcommand(subparsers):
     )
     rand_group.add_argument(
         '--seed',
-        help='numpy random seed (default None)',
+        help='numpy random seed (default random)',
         type=int,
         default=None,
     )

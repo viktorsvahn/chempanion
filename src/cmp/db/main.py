@@ -30,6 +30,38 @@ def sample(atoms,n_samples,output_name):
 	}
 
 
+def create_tag(atoms,assignment):
+	new_tag, statement = assignment.split('=')
+	
+	# Replace 'energy' in the statement
+	if 'energy' in statement:
+		E = atoms.get_potential_energy()
+		statement = statement.replace('energy', str(E))
+
+	# Replace any info-key in the statement
+	for key in atoms.info:
+		if key in statement:
+			statement = statement.replace(key, f'{atoms.info[key]}')
+			#eval_statement = True
+
+	# Evaluate statement if possible
+	try:
+		final_tag = eval(statement)
+	except:
+		final_tag = statement
+	
+	# Assign new tag
+	atoms.info[new_tag] = final_tag
+	return atoms
+
+
+def add_tags(atoms,assignment,output_name):
+	print(assignment)
+	new_atoms = [create_tag(a,assignment) for a in atoms]
+	if output_name is not None:
+		write(output_name,new_atoms)
+
+
 def main(args):
 	show_small_banner()
 	args = vars(args)
@@ -79,3 +111,12 @@ def main(args):
 		tabulate(output_summary,header='\nOutput summary:')
 	except:
 		pass
+
+
+	if args['add_info'] is not None:
+		print('\nProcessing:')
+		add_tags(
+			atoms,
+			assignment=args['add_info'],
+			output_name=args['output']
+		)

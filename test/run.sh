@@ -17,3 +17,6 @@ cmp db db.xyz --sample 3 --seed 123
 cmp db db.xyz --sample 0.5 --info Nmols 1*
 cmp db db.xyz --info Samp OPLS*
 cmp db db.xyz --info Samp OPLS
+cmp db db.xyz --info Samp OPLS* --add-info test=energy//10**3
+cmp db db.xyz --add-info test=Nmols//2
+cmp db db.xyz --add-info test=lol
