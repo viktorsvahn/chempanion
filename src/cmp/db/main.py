@@ -1,6 +1,6 @@
 import numpy as np
 
-from ase.io import read
+from ase.io import read,write
 
 from cmp.utils import tabulate, show_small_banner, wildcard_match, count_unique, select_atoms
 from cmp.db.utils import sample, add_tags
@@ -40,10 +40,9 @@ def main(args):
 			input_summary['Seed'] = args['seed']
 
 		# Perform random sampling
-		output_summary = sample(
+		new_atoms, output_summary = sample(
 			atoms,
 			n_samples=args['n_samples'],
-			output_name=args['output'],
 		)
 
 	
@@ -57,11 +56,16 @@ def main(args):
 		pass
 
 
+	# Assign new handle to structures
 	if args['add_info'] is not None:
-		print('\nProcessing:')
-		add_tags(
+		print('\nAttempting to process and assign:')
+		new_atoms = add_tags(
 			atoms,
 			assignment=args['add_info'],
-			output_name=args['output'],
 			debug=args['debug'],
 		)
+
+	
+	# Save output
+	if args['output'] is not None:
+		write(args['output'],new_atoms)

@@ -1,12 +1,10 @@
 import numpy as np
 from operator import itemgetter
 
-from ase.io import write
-
 from cmp.db.evaluator_utils import evaluate
 
 
-def sample(atoms,n_samples,output_name):
+def sample(atoms,n_samples):
 	n = len(atoms)
 
 	if '.' in n_samples: N = int(n*float(n_samples))
@@ -19,10 +17,7 @@ def sample(atoms,n_samples,output_name):
 	)
 	nn = len(new_atoms)
 
-	if output_name is not None:
-		write(output_name,new_atoms)
-
-	return {
+	return new_atoms, {
 		'Structures sampled':nn,
 		'Effective sample rate':round(N/n,3),
 	}
@@ -64,8 +59,7 @@ def create_tag(atoms,assignment,index=None,debug=None):
 	return atoms
 
 
-def add_tags(atoms,assignment,output_name,debug):
+def add_tags(atoms,assignment,debug):
 	print(assignment)
 	new_atoms = [create_tag(a,assignment, i,debug=debug) for i,a in enumerate(atoms)]
-	if output_name is not None:
-		write(output_name,new_atoms)
+	return new_atoms
