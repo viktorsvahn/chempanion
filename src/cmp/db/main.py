@@ -30,7 +30,7 @@ def sample(atoms,n_samples,output_name):
 	}
 
 
-def create_tag(atoms,assignment):
+def create_tag(atoms,assignment,index=None):
 	new_tag, statement = assignment.split('=')
 	
 	# Replace 'energy' in the statement
@@ -47,6 +47,8 @@ def create_tag(atoms,assignment):
 	# Evaluate statement if possible
 	try:
 		final_tag = eval(statement)
+		if final_tag.isnumeric() is False:
+			print(f'Proper evaulation of statement not possible at structure index {i}.')
 	except:
 		final_tag = statement
 	
@@ -57,7 +59,7 @@ def create_tag(atoms,assignment):
 
 def add_tags(atoms,assignment,output_name):
 	print(assignment)
-	new_atoms = [create_tag(a,assignment) for a in atoms]
+	new_atoms = [create_tag(a,assignment, i) for i,a in enumerate(atoms)]
 	if output_name is not None:
 		write(output_name,new_atoms)
 
