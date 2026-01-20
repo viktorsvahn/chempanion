@@ -6,6 +6,7 @@ from operator import itemgetter
 from ase.io import read,write
 
 from cmp.utils import tabulate, show_small_banner, wildcard_match, count_unique, select_atoms
+from cmp.db.evaluator_utils import evaluate
 
 
 def sample(atoms,n_samples,output_name):
@@ -30,36 +31,45 @@ def sample(atoms,n_samples,output_name):
 	}
 
 
-def create_tag(atoms,assignment,index=None):
-	new_tag, statement = assignment.split('=')
+def create_tag(atoms,assignment,index=None,debug=None):
+	new_tag, expression = assignment.split('=')
 	
-	# Replace 'energy' in the statement
-	if 'energy' in statement:
+	# Replace 'energy' in the expression
+	if 'energy' in expression:
 		E = atoms.get_potential_energy()
-		statement = statement.replace('energy', str(E))
+		expression = expression.replace('energy', str(E))
 
-	# Replace any info-key in the statement
+	# Replace any info-key in the expression
 	for key in atoms.info:
-		if key in statement:
-			statement = statement.replace(key, f'{atoms.info[key]}')
-			#eval_statement = True
+		if key in expression:
+			if isinstance(atoms.info[key],(np.ndarray)):
+				array_to_list = list(atoms.info[key].flatten('F'))
+				expression = expression.replace(key, f'{array_to_list}')
+			else:
+				expression = expression.replace(key, f'{atoms.info[key]}')
 
-	# Evaluate statement if possible
+	# Evaluate expression if possible
 	try:
-		final_tag = eval(statement)
-		if final_tag.isnumeric() is False:
-			print(f'Proper evaulation of statement not possible at structure index {i}.')
+		result = evaluate(expression)
 	except:
-		final_tag = statement
+		result = expression
 	
+	if isinstance(result, list):
+		final_tag = ", ".join(map(str, result))
+	else:
+		final_tag = str(result)
+	
+	if debug:
+		print(final_tag)
+
 	# Assign new tag
 	atoms.info[new_tag] = final_tag
 	return atoms
 
 
-def add_tags(atoms,assignment,output_name):
+def add_tags(atoms,assignment,output_name,debug):
 	print(assignment)
-	new_atoms = [create_tag(a,assignment, i) for i,a in enumerate(atoms)]
+	new_atoms = [create_tag(a,assignment, i,debug=debug) for i,a in enumerate(atoms)]
 	if output_name is not None:
 		write(output_name,new_atoms)
 
@@ -120,5 +130,6 @@ def main(args):
 		add_tags(
 			atoms,
 			assignment=args['add_info'],
-			output_name=args['output']
+			output_name=args['output'],
+			debug=args['debug'],
 		)

@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!d/usr/bin/python
 
 import argparse
 from importlib.metadata import version
@@ -39,6 +39,11 @@ def register_subcommand(subparsers):
         dest='test_var',
         default=None,
         help='test var',
+    )
+    parser.add_argument(
+        '--debug',
+        action='store_true', 
+        help=argparse.SUPPRESS
     )
     parser.add_argument(
         '--add-info',
