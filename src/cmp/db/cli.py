@@ -62,7 +62,7 @@ def register_subcommand(subparsers):
         help='select structures where info-HANDLE matches VALUE (wildcards supported)',
     )
     rand_group.add_argument(
-        '-s',
+        '--sample',
         dest='n_samples',
         type=str,
         default=None,
@@ -70,6 +70,7 @@ def register_subcommand(subparsers):
     )
     rand_group.add_argument(
         '--seed',
+        dest='seed',
         help='numpy random seed (default random)',
         type=int,
         default=None,
