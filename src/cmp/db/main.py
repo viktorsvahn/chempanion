@@ -68,4 +68,7 @@ def main(args):
 	
 	# Save output
 	if args['output'] is not None:
-		write(args['output'],new_atoms)
+		try:
+			write(args['output'],new_atoms)
+		except:
+			write(args['output'],atoms)
