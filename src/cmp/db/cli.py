@@ -1,5 +1,3 @@
-#!d/usr/bin/python
-
 import argparse
 from importlib.metadata import version
 
